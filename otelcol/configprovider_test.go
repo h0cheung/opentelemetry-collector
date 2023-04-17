@@ -14,6 +14,7 @@ import (
 	"go.uber.org/zap/zapcore"
 
 	"go.opentelemetry.io/collector/component"
+	"go.opentelemetry.io/collector/config/configrotate"
 	"go.opentelemetry.io/collector/config/configtelemetry"
 	"go.opentelemetry.io/collector/confmap"
 	"go.opentelemetry.io/collector/confmap/provider/fileprovider"
@@ -67,6 +68,13 @@ var configNop = &Config{
 				DisableCaller:     false,
 				DisableStacktrace: false,
 				InitialFields:     map[string]any(nil),
+				Rotation: &configrotate.Config{
+					Enabled:      true,
+					MaxMegabytes: 100,
+					MaxDays:      0,
+					MaxBackups:   100,
+					LocalTime:    false,
+				},
 			},
 			Metrics: telemetry.MetricsConfig{
 				Level:   configtelemetry.LevelBasic,
